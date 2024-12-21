@@ -3,17 +3,93 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>虚空仪表盘</title>
+        <link rel="stylesheet" href="./global.css">
+        <!-- 引入全局样式 -->
+        <title>虚空•仪表盘</title>
     </head>
     <body>
         <script type="module">
-            import * as ksu from './kernelsu.js';
-            // 引入 KernelSU 的 JavaScript API
-            window.ksu = ksu;
-            // 挂载到 ksu 命名空间以便调用
+            import * as kernelsu from './kernelsu.js';
+            // 引入 KernelSU 的 JavaScript API，以便执行适用于 KernelSU Webview 的操作
+            window.sys = kernelsu;
+            // 挂载到全局命名空间 sys 以便调用
         </script>
-        <script async>
-            // 后续处理
-        </script>
+        <s-page theme="light">
+        <!-- dev 预设主题目前为 dark -->
+            <s-appbar>
+                <s-icon slot="navigation">
+                    <svg width="800px" height="800px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <style>
+                                .a, .b {
+                                    fill: none;
+                                    stroke: #000000;
+                                    stroke-linecap: round;
+                                    stroke-width: 4;
+                                }
+                                .a {
+                                    stroke-linejoin: round;
+                                }
+                                .b {
+                                    stroke-miterlimit: 5.7143;
+                                }
+                            </style>
+                        </defs>
+                        <path class="a" d="M27.19,42.5a89.0444,89.0444,0,0,1-14.6813-1.5725S13.94,12.3721,17.9209,5.5357c-.13-.297,2.9919,1.2125,4.4218,6.2665a25.5569,25.5569,0,0,1,4.8471-.47"/>
+                        <ellipse class="a" cx="21.2404" cy="20.3089" rx="1.6708" ry="2.1301"/>
+                        <path class="a" d="M27.19,42.5a89.0444,89.0444,0,0,0,14.6813-1.5725S40.44,12.3721,36.4583,5.5357c.03-.2006-3.59,1.7549-4.4218,6.2665a25.5582,25.5582,0,0,0-4.8471-.47"/>
+                        <ellipse class="a" cx="33.1398" cy="20.3089" rx="1.6708" ry="2.1301"/>
+                        <path class="b" d="M12.5083,40.927C10.5777,40.6,7.56,40.6178,6.4685,37.44c-1.0674-3.107.4377-6.6708,3.7411-7.0453"/>
+                        <path class="b" d="M25.4634,26.3872a1.4666,1.4666,0,0,0,1.4726-1.4725"/>
+                        <path class="b" d="M28.4091,26.3872a1.4666,1.4666,0,0,1-1.4726-1.4725"/>
+                    </svg>
+                </s-icon>
+                <div slot="headline">虚空•仪表盘</div>
+                <s-icon-button type="filled-tonal" slot="action">
+                    <s-icon>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                            <path d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z"></path>
+                        </svg>
+                    </s-icon>
+                </s-icon-button>
+            </s-appbar>
+            <!-- 应用栏组件 -->
+            <s-navigation>
+                <s-navigation-item onclick="goto('home');">
+                    <s-icon type="home" slot="icon"></s-icon>
+                    <div slot="text">概览</div>
+                </s-navigation-item>
+                <s-navigation-item onclick="goto('proxy');">
+                    <s-icon slot="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                            <path d="M440-80v-200q0-56-17-83t-45-53l57-57q12 11 23 23.5t22 26.5q14-19 28.5-33.5T538-485q38-35 69-81t33-161l-63 63-57-56 160-160 160 160-56 56-64-63q-2 143-44 203.5T592-425q-32 29-52 56.5T520-280v200h-80ZM248-633q-4-20-5.5-44t-2.5-50l-64 63-56-56 160-160 160 160-57 56-63-62q0 21 2 39.5t4 34.5l-78 19Zm86 176q-20-21-38.5-49T263-575l77-19q10 27 23 46t28 34l-57 57Z"></path>
+                        </svg>
+                    </s-icon>
+                    <div slot="text">代理</div>
+                </s-navigation-item>
+                <s-navigation-item onclick="goto('log');">
+                    <s-icon slot="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                            <path d="M200-200h560v-367L567-760H200v560Zm0 80q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h400l240 240v400q0 33-23.5 56.5T760-120H200Zm80-160h400v-80H280v80Zm0-160h400v-80H280v80Zm0-160h280v-80H280v80Zm-80 400v-560 560Z"></path>
+                        </svg>
+                    </s-icon>
+                    <div slot="text">日志</div>
+                </s-navigation-item>
+                <s-navigation-item onclick="goto('tools');">
+                    <s-icon slot="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                            <path d="M686-132 444-376q-20 8-40.5 12t-43.5 4q-100 0-170-70t-70-170q0-36 10-68.5t28-61.5l146 146 72-72-146-146q29-18 61.5-28t68.5-10q100 0 170 70t70 170q0 23-4 43.5T584-516l244 242q12 12 12 29t-12 29l-84 84q-12 12-29 12t-29-12Zm29-85 27-27-256-256q18-20 26-46.5t8-53.5q0-60-38.5-104.5T386-758l74 74q12 12 12 28t-12 28L332-500q-12 12-28 12t-28-12l-74-74q9 57 53.5 95.5T360-440q26 0 52-8t47-25l256 256ZM472-488Z"></path>
+                        </svg>
+                    </s-icon>
+                    <div slot="text">工具</div>
+                </s-navigation-item>
+            </s-navigation>
+            <!-- 导航栏组件，其上按键绑定页面切换函数 -->
+        </s-page>
+        <!-- Sober 推荐的页面根节点 -->
+        <script src="./sober.min.js"></script>
+        <!-- 引入 Sober 组件库 -->
+        <script src="./index.js"></script>
+        <!-- 引入 JavaScript 脚本以支持执行复杂动作 -->
     </body>
 </html>

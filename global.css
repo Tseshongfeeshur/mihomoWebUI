@@ -1,0 +1,37 @@
+:not(:defined) {
+  visibility: hidden;
+}
+
+body {
+    margin: 0;
+    /* 删除多余间距 */
+    height: 100vh;
+    /* 设置高度 */
+}
+
+s-appbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+@media(max-width: 768px){
+  #container {
+    margin-top: 56px;
+  }
+}
+/* 窄屏幕时调整为应用栏留出的间距 */
+
+s-page {
+    height: 100vh;
+    width: 100%;
+}
+
+s-navigation {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
