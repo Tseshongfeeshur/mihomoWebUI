@@ -71,7 +71,7 @@ function Stdio() {
   export function spawn(command, args, options) {
     if (typeof args === "undefined") {
       args = [];
-    } else if (typeof args === "object") {
+    } else if (!(args instanceof Array)) {
         // allow for (command, options) signature
         options = args;
     }
@@ -112,4 +112,8 @@ export function fullScreen(isFullScreen) {
 
 export function toast(message) {
   ksu.toast(message);
+}
+
+export function moduleInfo() {
+  return ksu.moduleInfo();
 }
