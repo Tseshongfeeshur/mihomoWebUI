@@ -1,3 +1,6 @@
+window.port = '9090';
+// dev 之后要写获取 port 的逻辑
+
 const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 const page = params.get('page') || 'home';
@@ -19,16 +22,13 @@ async function goto(page) {
     const nav = document.getElementById('nav');
     // 定义元素
 
-    container.style.opacity = '0.3';
-    // 容器淡出
-
     async function fetchResource(url) {
         try {
             const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP error ${response.status}`);
         return await response.text();
         } catch (error) {
-            sys.toast(`加载资源失败：${url} - ${error}`);
+            toast(`加载资源失败：${url} - ${error}`);
             return null;
             // 返回 null 表示加载失败
         }
@@ -36,7 +36,7 @@ async function goto(page) {
     // 获取子结构
     const subHtml = await fetchResource(`./pages/${page}.html`);
     if (!subHtml) {
-        sys.toast('加载页面失败，将返回主页');
+        toast('加载页面失败，将返回主页');
         return goto('home');
     }
     // 若无当前页面则返回主页
@@ -75,7 +75,6 @@ async function goto(page) {
     // 更新地址栏
 
     window.onpopstate = function(event) {
-        isLoaded = false;
         goto('home');
     };
     // 设置后退行为

@@ -14,17 +14,21 @@ s-appbar {
     top: 0;
     left: 0;
     right: 0;
+    z-index: 999;
+}
+
+#container {
+    padding: 64px 0;
 }
 
 @media(max-width: 768px){
   #container {
-    margin-top: 56px;
+    padding-top: 56px;
   }
 }
 /* 窄屏幕时调整为应用栏留出的间距 */
 
 s-page {
-    height: 100vh;
     width: 100%;
 }
 
@@ -34,4 +38,5 @@ s-navigation {
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 999;
 }

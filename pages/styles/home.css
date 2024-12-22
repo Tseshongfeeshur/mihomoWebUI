@@ -1,0 +1,31 @@
+#speed-box {
+    display: block;
+    max-width: 100%;
+    width: calc(100% - 2em);
+    height: calc(50vw + 3em);
+    margin: 1em;
+    padding: 1em;
+    box-shadow: 0 0 0 0 transparent;
+}
+
+#text {
+    margin-top: 1em;
+    display: flex;
+    justify-content: space-around;
+}
+
+.speed-text-box {
+    display: flex;
+    align-items: center;
+}
+
+#speed-text-upload, #speed-text-download {
+    margin-left: 0.3em;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.speed-text-desp {
+    opacity: 0.5;
+    font-size: 0.8em;
+}

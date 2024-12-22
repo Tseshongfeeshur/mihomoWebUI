@@ -11,12 +11,6 @@
         <!-- 虽然看起来没什么用 -->
     </head>
     <body>
-        <script type="module">
-            import * as kernelsu from './kernelsu.js';
-            // 引入 KernelSU 的 JavaScript API，以便执行适用于 KernelSU Webview 的操作
-            window.sys = kernelsu;
-            // 挂载到全局命名空间 sys 以便调用
-        </script>
         <s-page theme="dark">
         <!-- dev 预设主题目前为 dark -->
             <s-appbar>
@@ -57,7 +51,7 @@
                             </svg>
                         </s-icon>
                     </s-icon-button>
-                    <s-popup-menu-item>重载仪表板</s-popup-menu-item>
+                    <s-popup-menu-item onclick="window.location.reload()">重载仪表板</s-popup-menu-item>
                     <s-popup-menu-item>重载内核</s-popup-menu-item>
                     <s-popup-menu-item>重启内核</s-popup-menu-item>
                 </s-popup-menu>
@@ -99,8 +93,12 @@
             <!-- 导航栏组件，其上按键绑定页面切换函数 -->
         </s-page>
         <!-- Sober 推荐的页面根节点 -->
+        <script src="./kernelsu.js"></script>
+        <!-- 引入 KernelSU JavaScript API，以便与操作系统通信 --> 
         <script src="./sober.min.js"></script>
         <!-- 引入 Sober 组件库 -->
+        <script src="./chart.js"></script>
+        <!-- 引入绘图库以支持绘制实时速度图像 -->
         <script src="./index.js"></script>
         <!-- 引入 JavaScript 脚本以支持执行复杂动作 -->
     </body>

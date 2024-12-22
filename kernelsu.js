@@ -1,119 +1,127 @@
 let callbackCounter = 0;
+
 function getUniqueCallbackName(prefix) {
-  return `${prefix}_callback_${Date.now()}_${callbackCounter++}`;
+    return `${prefix}_callback_${Date.now()}_${callbackCounter++}`;
 }
 
-export function exec(command, options) {
-  if (typeof options === "undefined") {
-    options = {};
-  }
-
-  return new Promise((resolve, reject) => {
-    // Generate a unique callback function name
-    const callbackFuncName = getUniqueCallbackName("exec");
-
-    // Define the success callback function
-    window[callbackFuncName] = (errno, stdout, stderr) => {
-      resolve({ errno, stdout, stderr });
-      cleanup(callbackFuncName);
-    };
-
-    function cleanup(successName) {
-      delete window[successName];
+function exec(command, options) {
+    if (typeof options === "undefined") {
+        options = {};
     }
 
-    try {
-      ksu.exec(command, JSON.stringify(options), callbackFuncName);
-    } catch (error) {
-      reject(error);
-      cleanup(callbackFuncName);
-    }
-  });
+    return new Promise((resolve, reject) => {
+        // Generate a unique callback function name
+        const callbackFuncName = getUniqueCallbackName("exec");
+
+        // Define the success callback function
+        window[callbackFuncName] = (errno, stdout, stderr) => {
+            resolve({ errno, stdout, stderr });
+            cleanup(callbackFuncName);
+        };
+
+        function cleanup(successName) {
+            delete window[successName];
+        }
+
+        try {
+            ksu.exec(command, JSON.stringify(options), callbackFuncName);
+        } catch (error) {
+            reject(error);
+            cleanup(callbackFuncName);
+        }
+    });
 }
 
 function Stdio() {
     this.listeners = {};
-  }
-  
-  Stdio.prototype.on = function (event, listener) {
+}
+
+Stdio.prototype.on = function(event, listener) {
     if (!this.listeners[event]) {
-      this.listeners[event] = [];
+        this.listeners[event] = [];
     }
     this.listeners[event].push(listener);
-  };
-  
-  Stdio.prototype.emit = function (event, ...args) {
+};
+
+Stdio.prototype.emit = function(event, ...args) {
     if (this.listeners[event]) {
-      this.listeners[event].forEach((listener) => listener(...args));
+        this.listeners[event].forEach((listener) => listener(...args));
     }
-  };
-  
-  function ChildProcess() {
+};
+
+function ChildProcess() {
     this.listeners = {};
     this.stdin = new Stdio();
     this.stdout = new Stdio();
     this.stderr = new Stdio();
-  }
-  
-  ChildProcess.prototype.on = function (event, listener) {
+}
+
+ChildProcess.prototype.on = function(event, listener) {
     if (!this.listeners[event]) {
-      this.listeners[event] = [];
+        this.listeners[event] = [];
     }
     this.listeners[event].push(listener);
-  };
-  
-  ChildProcess.prototype.emit = function (event, ...args) {
+};
+
+ChildProcess.prototype.emit = function(event, ...args) {
     if (this.listeners[event]) {
-      this.listeners[event].forEach((listener) => listener(...args));
+        this.listeners[event].forEach((listener) => listener(...args));
     }
-  };
-  
-  export function spawn(command, args, options) {
+};
+
+function spawn(command, args, options) {
     if (typeof args === "undefined") {
-      args = [];
+        args = [];
     } else if (!(args instanceof Array)) {
         // allow for (command, options) signature
         options = args;
     }
-    
+
     if (typeof options === "undefined") {
-      options = {};
+        options = {};
     }
-  
+
     const child = new ChildProcess();
     const childCallbackName = getUniqueCallbackName("spawn");
     window[childCallbackName] = child;
-  
+
     function cleanup(name) {
-      delete window[name];
+        delete window[name];
     }
 
-    child.on("exit", code => {
+    child.on("exit", (code) => {
         cleanup(childCallbackName);
     });
 
     try {
-      ksu.spawn(
-        command,
-        JSON.stringify(args),
-        JSON.stringify(options),
-        childCallbackName
-      );
+        ksu.spawn(
+            command,
+            JSON.stringify(args),
+            JSON.stringify(options),
+            childCallbackName
+        );
     } catch (error) {
-      child.emit("error", error);
-      cleanup(childCallbackName);
+        child.emit("error", error);
+        cleanup(childCallbackName);
     }
     return child;
-  }
-
-export function fullScreen(isFullScreen) {
-  ksu.fullScreen(isFullScreen);
 }
 
-export function toast(message) {
-  ksu.toast(message);
+function fullScreen(isFullScreen) {
+    ksu.fullScreen(isFullScreen);
 }
 
-export function moduleInfo() {
-  return ksu.moduleInfo();
+function toast(message) {
+    ksu.toast(message);
 }
+
+function moduleInfo() {
+    return ksu.moduleInfo();
+}
+
+// Expose functions globally
+window.exec = exec;
+window.spawn = spawn;
+window.fullScreen = fullScreen;
+window.toast = toast;
+window.moduleInfo = moduleInfo;
