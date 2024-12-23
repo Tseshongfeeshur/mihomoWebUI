@@ -40,6 +40,10 @@ window.pageName = '概览';
                     display: false,
                 },
             },
+            responsive: true,
+            // 启用响应式
+            maintainAspectRatio: false,
+            // 禁用宽高比限制
             scales: {
                 x: {
                     display: false,
@@ -48,13 +52,15 @@ window.pageName = '概览';
                     },
                 },
                 y: {
-                    title: {
-                        display: false,
-                    },
-                    ticks: {
-                        callback: (value) => value.toFixed(2),
-                        // 显示两位小数
-                    },
+                    // title: {
+                    //     display: false,
+                    // },
+                    // ticks: {
+                    //     callback: (value) => value.toFixed(2),
+                    //     // 显示两位小数
+                    // },
+                    display: false,
+                    // 不显示数值似乎更好看
                     beginAtZero: true,
                     grid: {
                         display: false,
