@@ -1,5 +1,6 @@
+window.ip ='127.0.0.1';
 window.port = '9090';
-// dev 之后要写获取 port 的逻辑
+// dev 之后要写获取 ip 和 port 的逻辑
 
 const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
@@ -11,11 +12,6 @@ goto(page);
 async function goto(page) {
     if (page == 'index') return goto('home');
     // 拦截加载容器，注释位置调整
-
-    // window.onpopstate = function(event) {
-    //     return;
-    // };
-    // 阻断后退行为
 
     const title = document.getElementById('title');
     const container = document.getElementById('container');
@@ -62,8 +58,8 @@ async function goto(page) {
     nav.value = page;
     // 导航栏同步更新
 
-    // const layoutMain = document.getElementById('layout-main');
-    // layoutMain.scrollTop = 0;
+    const scrollObj = document.querySelector('html');
+    scrollObj.scrollTop = 0;
     // 滚动到顶部
 
     const headName = window.pageName || ''; 
@@ -79,3 +75,46 @@ async function goto(page) {
     };
     // 设置后退行为
 }
+
+fullScreen(false);
+fullScreenStatu = false;
+async function turnToFullScreen() {
+    if(fullScreenStatu == false) {
+        fullScreen(true);
+        fullScreenStatu = true;
+    } else {
+        fullScreen(false);
+        fullScreenStatu = false;
+    }
+}
+
+async function loadConfigs() {
+    try {
+        const response = await fetch(`http://${ip}:${port}/configs`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        window.configs = await response.json();
+    } catch (error) {
+        // 捕获和处理错误
+        toast(`加载配置错误：${error}`);
+    }
+}
+
+async function updateConfig(obj) {
+    const response = await fetch(`http://${ip}:${port}/configs`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(obj),
+    });
+    if (response.ok) {
+        loadConfigs();
+    } else {
+        toast(`更新配置失败：${response.statusText}`);
+    }
+    return response.status;
+}
+
+loadConfigs();

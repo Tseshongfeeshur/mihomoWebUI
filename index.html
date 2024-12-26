@@ -11,7 +11,7 @@
         <!-- 虽然看起来没什么用 -->
     </head>
     <body>
-        <s-page thedevme="auto">
+        <s-page theme="auto">
         <!-- 主题跟随系统 -->
             <s-appbar>
                 <s-icon slot="navigation">
@@ -51,6 +51,7 @@
                             </svg>
                         </s-icon>
                     </s-icon-button>
+                    <s-popup-menu-item onclick="turnToFullScreen()">仪表板全屏</s-popup-menu-item>
                     <s-popup-menu-item onclick="window.location.reload()">重载仪表板</s-popup-menu-item>
                     <s-popup-menu-item>重载内核</s-popup-menu-item>
                     <s-popup-menu-item>重启内核</s-popup-menu-item>

@@ -4,6 +4,7 @@
     <s-carousel-item id="carousel-item-3"></s-carousel-item>
 </s-carousel>
 <!-- 自动轮播图 -->
+<!-- dever 使用 js 获取 json 动态地修改图片链接和点击链接 -->
 <s-card id="speed-box" type="outlined" clickable="true">
     <div class="card-title-box">
         <s-icon>
@@ -42,3 +43,29 @@
     </div>
 </s-card>
 <!-- 网速绘图卡片 -->
+<div id="line-3-box">
+    <s-card id="mode-box" type="outlined" clickable="true">
+        <div class="card-title-box">
+            <s-icon>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                  <path d="M440-80v-200q0-56-17-83t-45-53l57-57q12 11 23 23.5t22 26.5q14-19 28.5-33.5T538-485q38-35 69-81t33-161l-63 63-57-56 160-160 160 160-56 56-64-63q-2 143-44 203.5T592-425q-32 29-52 56.5T520-280v200h-80ZM248-633q-4-20-5.5-44t-2.5-50l-64 63-56-56 160-160 160 160-57 56-63-62q0 21 2 39.5t4 34.5l-78 19Zm86 176q-20-21-38.5-49T263-575l77-19q10 27 23 46t28 34l-57 57Z"></path>
+                </svg>
+            </s-icon>
+            <span class="card-title">出站模式</span>
+        </div>
+        <div id="mode-options">
+            <s-radio-button name="mode" value="rule">规则</s-radio-button>
+            <s-radio-button name="mode" value="global">全局</s-radio-button>
+            <s-radio-button name="mode" value="direct">直连</s-radio-button>
+        </div>
+    </s-card>
+    <div id="line-3-2-box">
+        <s-card type="outlined" clickable="true">
+            test2
+        </s-card>
+        <s-card type="outlined" clickable="true">
+            test3
+        </s-card>
+    </div>
+</div>
+<!-- 第三行卡片 -->

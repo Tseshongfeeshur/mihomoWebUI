@@ -72,7 +72,7 @@ window.pageName = '概览';
 
     async function streamTrafficData() {
     // 从 /traffic 拿到数据并更新图表
-        const response = await fetch(`http://127.0.0.1:${port}/traffic`);
+        const response = await fetch(`http://${ip}:${port}/traffic`);
         const reader = response.body.getReader();
         const decoder = new TextDecoder('utf-8');
         let buffer = '';
@@ -122,3 +122,19 @@ window.pageName = '概览';
     streamTrafficData().catch(err => toast(`流数据处理失败：${err}`));
     // 启动流数据处理
 }
+
+function defineModeCard() {
+    document.querySelector(`s-radio-button[value="${configs.mode}"]`).checked = true;
+    // 读取配置设置初始值
+    const modeRadios = document.querySelectorAll('s-radio-button[name="mode"]');
+    modeRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            if (radio.checked) {
+                updateConfig({
+                    "mode": radio.value,
+                });
+            }
+        });
+    });
+}
+defineModeCard();
