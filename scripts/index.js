@@ -79,7 +79,7 @@ async function goto(page) {
 fullScreen(false);
 fullScreenStatu = false;
 async function turnToFullScreen() {
-    if(fullScreenStatu == false) {
+    if (fullScreenStatu == false) {
         fullScreen(true);
         fullScreenStatu = true;
     } else {
